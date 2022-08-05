@@ -45,8 +45,8 @@ class Login extends Component {
   render() {
     const { userInput, emailInput, isDisabled } = this.state;
     return (
-      <div>
-        <form>
+      <div className="login-section">
+        <form className="login-form">
           <label htmlFor="userInput">
             User:
             <input
