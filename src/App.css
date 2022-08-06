@@ -5,15 +5,75 @@ body {
 }
 
 .login-section {
+  align-items: center;
+  background-color: rgb(139, 72, 17);
   display: flex;
+  flex-direction: column;
+  height: 100vh;
+  justify-content: baseline;
+  width: 100vw;
+}
+
+.trivia-logo {
+  animation: pulse 2000ms infinite;
+  height: 150px;
+  margin-top: 200px;
+  width: 400px;
+}
+
+@keyframes pulse {
+
+  0% {
+    transform: scale(1.1);
+  }
+
+  50% {
+    transform: scale(1);
+  }
+
+  100% {
+    transform: scale(1.1);
+  }
 }
 
 .login-form {
   align-items: center;
-  background-color: aqua;
+
+  /* background-color: rgb(148, 166, 168); */
+  border-radius: 10px;
+
+  /* box-shadow: 5px 5px 5px black; */
   display: flex;
   flex-direction: column;
-  height: 400px;
+  height: 200px;
   justify-content: center;
+  margin-top: 20px;
   width: 300px;
+}
+
+.login-form label {
+  color: white;
+  font-size: 20px;
+  font-weight: 700;
+}
+
+.login-form input {
+  border-radius: 5px;
+  height: 20px;
+  margin: 15px 5px 5px 10px;
+  width: 200px;
+}
+
+.btn-section {
+  margin-top: 20px;
+}
+
+.btn-section button {
+  border-radius: 10px;
+  font-size: 15px;
+  font-weight: 700;
+  height: 30px;
+  margin-left: 10px;
+  padding: 5px;
+  width: 100px;
 }

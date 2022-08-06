@@ -1,4 +1,11 @@
 export const GET_TOKEN = 'GET_TOKEN';
+export const SAVE_USER = 'SAVE_USER';
+
+export const saveUser = (user, email) => ({
+  type: SAVE_USER,
+  user,
+  email,
+});
 
 export const getToken = (token) => ({
   type: GET_TOKEN,
