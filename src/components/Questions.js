@@ -5,19 +5,9 @@ class Questions extends Component {
   constructor() {
     super();
     this.state = {
-      // alternativesOrder: '',
       questionIndex: 0,
     };
   }
-
-  // componentDidMount() {
-  //   const array = [0, 1, 2, 3, 4];
-  //   const randomArray = array.sort(() => Math.random() - 0.5);
-  //   this.setState({
-  //     alternativesOrder: randomArray,
-  //     currentPosition: 0,
-  //   });
-  // }
 
   handleClick = () => {
     this.setState((prev) => ({
@@ -28,50 +18,61 @@ class Questions extends Component {
   render() {
     const { questions } = this.props;
     const { questionIndex } = this.state;
-    // const index = alternativesOrder[currentPosition];
+    const array = [questions[questionIndex]
+      .correct_answer, ...questions[questionIndex].incorrect_answers];
+    const shuffleArray = array.sort(() => Math.random() - Number('0.5'));
+
     return (
       <div className="question-container">
-        {
-          (questions)
-            ? (
-              <div>
+        <div>
+          {
+            questions.map((question, index) => (
+              <div key={ index }>
                 <h1
                   data-testid="question-category"
                 >
-                  {questions[questionIndex].category}
+                  {question.category}
                 </h1>
                 <p
                   data-testid="question-text"
                 >
-                  {questions[questionIndex].question}
+                  {question.question}
                 </p>
-                {/* {
-                  (questions[questionIndex].type === 'boolean')
-                    ? <div>
-                      <button
-                        type="button"
-                        data-testid="correct-answer"
-                      >
-                        {questions[questionIndex].correct_answer}
-                      </button>
-                      <button
-                        type="button"
-                        data-testid="incorrect-answer"
-                      >
-                        {questions[questionIndex].incorrect_answer}
-                      </button>
-                    </div>
-                } */}
-                <button
-                  type="button"
-                  onClick={ this.handleClick }
-                >
-                  Próxima
-                </button>
+
               </div>
-            )
-            : <p>Loading...</p>
-        }
+
+            ))[questionIndex]
+          }
+          <div data-testid="answer-options">
+            {
+              shuffleArray.map((alternative, index) => (
+                (alternative === questions[questionIndex].correct_answer)
+                  ? (
+                    <button
+                      data-testid="correct-answer"
+                      type="button"
+                      key={ index }
+                    >
+                      {alternative}
+                    </button>)
+                  : (
+                    <button
+                      data-testid={ `wrong-answer-${index}` }
+                      type="button"
+                      key={ index }
+                    >
+                      {alternative}
+                    </button>)
+              ))
+            }
+          </div>
+          <button
+            type="button"
+            onClick={ this.handleClick }
+          >
+            Next
+          </button>
+        </div>
       </div>
     );
   }
