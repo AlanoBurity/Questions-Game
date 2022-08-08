@@ -39,7 +39,7 @@ class Login extends Component {
   }
 
   handleClick = async () => {
-    const { history, getToken, saveUserInputs } = this.props;
+    const { history, saveUserInputs } = this.props;
     const { userInput, emailInput } = this.state;
     saveUserInputs(userInput, emailInput);
     history.push('/questions');
