@@ -1,7 +1,7 @@
 import { SAVE_USER } from '../actions';
 
 const INITIAL_STATE = {
-  user: 'sign in',
+  user: 'Sign in',
   email: '',
 };
 

@@ -77,3 +77,52 @@ body {
   padding: 5px;
   width: 100px;
 }
+
+header {
+  background-color: rgb(139, 72, 17);
+  padding: 20px 0;
+}
+
+.header-container {
+  align-items: center;
+  color: white;
+  display: flex;
+  height: 150px;
+  justify-content: space-between;
+  margin: 0 auto;
+  position: relative;
+  width: 90%;
+}
+
+.avatar {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+}
+
+.avatar-image {
+  border-radius: 15px;
+}
+
+.trivia-header {
+  width: 300px;
+}
+
+.score-section {
+  text-align: center;
+}
+
+.game-section {
+  background-color: rgb(233, 221, 206);
+  height: 100vh;
+  width: 100vw;
+}
+
+.question-container {
+  background-color: rgb(126, 89, 41);
+  border-radius: 15px;
+  height: 200px;
+  margin: 30px auto;
+  padding: 10px;
+  width: 70%;
+}
