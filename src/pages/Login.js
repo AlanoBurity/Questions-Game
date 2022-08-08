@@ -32,10 +32,10 @@ class Login extends Component {
     });
   }
 
-  handleClick = () => {
+  handleClick = async () => {
     const { history, getToken, saveUserInputs } = this.props;
     const { userInput, emailInput } = this.state;
-    getToken();
+    await getToken();
     saveUserInputs(userInput, emailInput);
     history.push('/questions');
   }

@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import React, { Component } from 'react';
 import Header from '../components/Header';
 import Questions from '../components/Questions';
@@ -16,9 +17,14 @@ class Game extends Component {
   }
 
   fetchQuestion = async (token) => {
+    const { history } = this.props;
+    const isThre = 3;
     const result = await fetch(`https://opentdb.com/api.php?amount=5&token=${token}`);
     const data = await result.json();
-    console.log(data.results);
+    if (data.response_code === isThre) {
+      localStorage.removeItem('token');
+      history.push('/');
+    }
     this.setState({
       questions: data.results,
     });
@@ -34,5 +40,11 @@ class Game extends Component {
     );
   }
 }
+
+Game.propTypes = {
+  history: PropTypes.shape({
+    push: PropTypes.func,
+  }).isRequired,
+};
 
 export default Game;
