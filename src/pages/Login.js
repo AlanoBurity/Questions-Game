@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import propTypes from 'prop-types';
+import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { fetchToken, saveUser } from '../redux/actions';
 import trivia from '../trivia.png';
@@ -20,7 +20,8 @@ class Login extends Component {
       [name]: value,
     }, () => {
       const { userInput, emailInput } = this.state;
-      if (userInput.length !== 0 && emailInput.length !== 0) {
+      const reg = /^\w+([/.-]?\w+)*@\w+([/.-]?\w+)*(\.\w{2,3})+$/;
+      if (userInput.length !== 0 && reg.test(emailInput)) {
         this.setState({
           isDisabled: false,
         });
@@ -32,10 +33,10 @@ class Login extends Component {
     });
   }
 
-  handleClick = () => {
+  handleClick = async () => {
     const { history, getToken, saveUserInputs } = this.props;
     const { userInput, emailInput } = this.state;
-    getToken();
+    await getToken();
     saveUserInputs(userInput, emailInput);
     history.push('/questions');
   }
@@ -97,11 +98,11 @@ class Login extends Component {
 }
 
 Login.propTypes = {
-  history: propTypes.shape({
-    push: propTypes.func,
+  history: PropTypes.shape({
+    push: PropTypes.func,
   }).isRequired,
-  getToken: propTypes.func.isRequired,
-  saveUserInputs: propTypes.func.isRequired,
+  getToken: PropTypes.func.isRequired,
+  saveUserInputs: PropTypes.func.isRequired,
 };
 
 const mapDispatchToProps = (dispatch) => ({
