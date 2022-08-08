@@ -7,7 +7,7 @@ class Game extends Component {
   constructor() {
     super();
     this.state = {
-      questions: undefined,
+      questions: [],
     };
   }
 
@@ -35,7 +35,11 @@ class Game extends Component {
     return (
       <section className="game-section">
         <Header />
-        <Questions questions={ questions } />
+        {
+          (questions.length !== 0)
+            ? <Questions questions={ questions } />
+            : <p>Loading...</p>
+        }
       </section>
     );
   }
