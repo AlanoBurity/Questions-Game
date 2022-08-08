@@ -49,6 +49,7 @@ class Questions extends Component {
                 (alternative === questions[questionIndex].correct_answer)
                   ? (
                     <button
+                      className="border-green"
                       data-testid="correct-answer"
                       type="button"
                       key={ index }
@@ -57,6 +58,7 @@ class Questions extends Component {
                     </button>)
                   : (
                     <button
+                      className="border-red"
                       data-testid={ `wrong-answer-${index}` }
                       type="button"
                       key={ index }

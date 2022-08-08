@@ -4,7 +4,6 @@ import userEvent from '@testing-library/user-event';
 import { renderWithRouterAndRedux } from './helpers/renderWithRouterAndRedux';
 import App from '../App';
 
-
 describe('Testing Login page', () => {
     it("Should render all page's elements", () => {
       const { history } = renderWithRouterAndRedux(<App />);
@@ -25,12 +24,15 @@ describe('Testing Login page', () => {
 
       expect(playBtn).toBeDisabled();
 
+      userEvent.type(emailInput,'alguem@gmail');
+
+      expect(playBtn).toBeDisabled();
+
       userEvent.type(emailInput,'alguem@gmail.com');
 
       expect(playBtn).not.toBeDisabled();
 
       userEvent.click(playBtn);
-
       const { pathname } = history.location;
       expect(pathname).toBe('/questions');
 

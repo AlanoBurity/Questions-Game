@@ -14,6 +14,11 @@ class Login extends Component {
     };
   }
 
+  async componentDidMount() {
+    const { getToken } = this.props;
+    await getToken();
+  }
+
   handleChange = ({ target }) => {
     const { name, value } = target;
     this.setState({
@@ -36,7 +41,6 @@ class Login extends Component {
   handleClick = async () => {
     const { history, getToken, saveUserInputs } = this.props;
     const { userInput, emailInput } = this.state;
-    await getToken();
     saveUserInputs(userInput, emailInput);
     history.push('/questions');
   }

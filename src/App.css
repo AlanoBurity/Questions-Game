@@ -126,3 +126,11 @@ header {
   padding: 10px;
   width: 70%;
 }
+
+.border-green {
+  border: 3px solid rgb(6, 240, 15);
+}
+
+.border-red {
+  border: 3px solid red;
+}
