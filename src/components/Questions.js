@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import Timer from './Timer';
 
 class Questions extends Component {
   constructor() {
@@ -10,9 +11,26 @@ class Questions extends Component {
   }
 
   handleClick = () => {
+    const buttons = document.querySelectorAll('.styleButton');
+    buttons.forEach((button) => button.classList.remove('border-green'));
+    buttons.forEach((button) => button.classList.remove('border-red'));
     this.setState((prev) => ({
       questionIndex: prev.questionIndex + 1,
     }));
+  }
+
+  clickAlternative = ({ target }) => {
+    const buttonCorrect = document.querySelector('.correct');
+    const buttonIncorrect = document.querySelectorAll('.wrong');
+    const styleRed = 'border-red';
+    const stylegreen = 'border-green';
+    if (target.classList.contains('correct')) {
+      target.classList.add(stylegreen);
+      buttonIncorrect.forEach((button) => button.classList.add(styleRed));
+    } else {
+      buttonIncorrect.forEach((button) => button.classList.add(styleRed));
+      buttonCorrect.classList.add(stylegreen);
+    }
   }
 
   render() {
@@ -21,13 +39,13 @@ class Questions extends Component {
     const array = [questions[questionIndex]
       .correct_answer, ...questions[questionIndex].incorrect_answers];
     const shuffleArray = array.sort(() => Math.random() - Number('0.5'));
-
     return (
       <div className="question-container">
         <div>
           {
             questions.map((question, index) => (
               <div key={ index }>
+                <Timer />
                 <h1
                   data-testid="question-category"
                 >
@@ -49,19 +67,23 @@ class Questions extends Component {
                 (alternative === questions[questionIndex].correct_answer)
                   ? (
                     <button
-                      className="border-green"
+                      // className="border-green"
                       data-testid="correct-answer"
+                      className="correct styleButton"
                       type="button"
                       key={ index }
+                      onClick={ this.clickAlternative }
                     >
                       {alternative}
                     </button>)
                   : (
                     <button
-                      className="border-red"
+                      // className="border-red"
                       data-testid={ `wrong-answer-${index}` }
+                      className="wrong styleButton"
                       type="button"
                       key={ index }
+                      onClick={ this.clickAlternative }
                     >
                       {alternative}
                     </button>)
