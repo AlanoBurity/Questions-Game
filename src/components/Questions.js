@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-// import Timer from './Timer';
 
 class Questions extends Component {
   constructor() {
@@ -9,41 +8,31 @@ class Questions extends Component {
       questionIndex: 0,
       nextBtnDisabled: true,
       isDisable: false,
-      assertions: 0,
       questionLevel: '',
       arrayQuestions: [],
-      seconds: 5,
-      intervalID: null,
+      assertions: 0,
+      seconds: 30,
+      assertionTimer: 0,
     };
   }
 
   componentDidMount() {
     this.shuffleArrayFunc();
-    const intervalID = setInterval(() => {
+    this.intervalID();
+  }
+
+  intervalID = () => {
+    setInterval(() => {
       this.setState((prevState) => ({
-        seconds: prevState.seconds - 1,
+        seconds: prevState.seconds > 0 ? prevState.seconds - 1 : this.timerEnd(),
       }));
     }, Number('1000'));
-    this.setState({ intervalID });
   }
 
-  componentDidUpdate() {
-    const { seconds, intervalID } = this.state;
-    if (seconds === 0 && intervalID) {
-      this.clearID();
-    }
-    // setTimeout(() => {
-    //   this.setState({
-    //     seconds: seconds - 1,
-    //   });
-    // }, Number('1000'));
-  }
-
-  clearID = () => {
-    const { intervalID } = this.state;
-    clearInterval(intervalID);
+  timerEnd = () => {
+    clearInterval();
     this.setState({
-      intervalID: null,
+      seconds: 0,
       isDisable: true,
       nextBtnDisabled: false,
     });
@@ -68,7 +57,7 @@ class Questions extends Component {
       questionIndex: prev.questionIndex + 1,
       nextBtnDisabled: true,
       isDisable: false,
-      seconds: 5,
+      seconds: 30,
     }), this.shuffleArrayFunc);
   }
 
@@ -82,11 +71,12 @@ class Questions extends Component {
       const stylegreen = 'border-green';
       if (target.classList.contains('correct')) {
         const { questions } = this.props;
-        const { questionIndex } = this.state;
+        const { questionIndex, seconds } = this.state;
         target.classList.add(stylegreen);
         this.setState((prev) => ({
           assertions: prev.assertions + 1,
           questionLevel: questions[questionIndex].difficulty,
+          assertionTimer: seconds,
         }));
         buttonIncorrect.forEach((button) => button.classList.add(styleRed));
       } else {
@@ -95,12 +85,6 @@ class Questions extends Component {
       }
     });
   }
-
-  disableBttn = () => (this.setState({ isDisable: true }))
-
-  ableBtn = () => (this.setState({ isDisable: false }));
-
-  ableNextBtn = () => (this.setState({ nextBtnDisabled: false }));
 
   render() {
     const { questions } = this.props;
@@ -116,13 +100,6 @@ class Questions extends Component {
         {
           questions.map((question, index) => (
             <div key={ index }>
-              {/* <Timer
-                disableBttn={ this.disableBttn }
-                ableBtn={ this.ableBtn }
-                ableNextBtn={ this.ableNextBtn }
-                assertions={ assertions }
-                questionLevel={ questionLevel }
-              /> */}
               <h1 className="timer">{ seconds }</h1>
               <h1
                 data-testid="question-category"
