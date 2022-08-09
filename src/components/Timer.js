@@ -4,7 +4,7 @@ class Timer extends Component {
   constructor() {
     super();
     this.state = {
-      seconds: 5,
+      seconds: 30,
     };
   }
 
@@ -25,9 +25,8 @@ class Timer extends Component {
   render() {
     const { seconds } = this.state;
     return (
-      <div>
-        <p>{ seconds }</p>
-      </div>
+      <h1 className="timer">{ seconds }</h1>
+
     );
   }
 }
