@@ -1,8 +1,9 @@
 export const GET_TOKEN = 'GET_TOKEN';
-export const SAVE_USER = 'SAVE_USER';
+export const SAVE_PLAYER = 'SAVE_PLAYER';
+export const SAVE_SCORE = 'SAVE_SCORE';
 
 export const saveUser = (user, email) => ({
-  type: SAVE_USER,
+  type: SAVE_PLAYER,
   user,
   email,
 });
@@ -22,3 +23,8 @@ export const fetchToken = () => async (dispatch) => {
     console.log(error);
   }
 };
+
+// export const saveScoreState = (score) => ({
+//   type: SAVE_SCORE,
+//   score,
+// });
