@@ -7,6 +7,7 @@ class Questions extends Component {
     super();
     this.state = {
       questionIndex: 0,
+      isDisable: false,
     };
   }
 
@@ -33,9 +34,13 @@ class Questions extends Component {
     }
   }
 
+  disableBttn = () => (this.setState({ isDisable: true }))
+
+  ableBtn = () => (this.setState({ isDisable: false }));
+
   render() {
     const { questions } = this.props;
-    const { questionIndex } = this.state;
+    const { questionIndex, isDisable } = this.state;
     const array = [questions[questionIndex]
       .correct_answer, ...questions[questionIndex].incorrect_answers];
     const shuffleArray = array.sort(() => Math.random() - Number('0.5'));
@@ -45,7 +50,7 @@ class Questions extends Component {
           {
             questions.map((question, index) => (
               <div key={ index }>
-                <Timer />
+                <Timer disableBttn={ this.disableBttn } ableBtn={ this.ableBtn } />
                 <h1
                   data-testid="question-category"
                 >
@@ -73,6 +78,7 @@ class Questions extends Component {
                       type="button"
                       key={ index }
                       onClick={ this.clickAlternative }
+                      disabled={ isDisable }
                     >
                       {alternative}
                     </button>)
@@ -84,6 +90,7 @@ class Questions extends Component {
                       type="button"
                       key={ index }
                       onClick={ this.clickAlternative }
+                      disabled={ isDisable }
                     >
                       {alternative}
                     </button>)
