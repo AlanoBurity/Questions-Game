@@ -29,11 +29,12 @@ class Timer extends Component {
   }
 
   clearID = () => {
-    const { disableBttn } = this.props;
+    const { disableBttn, ableNextBtn } = this.props;
     const { intervalID } = this.state;
     clearInterval(intervalID);
     this.setState({ intervalID: null });
     disableBttn();
+    ableNextBtn();
   }
 
   render() {
@@ -48,6 +49,7 @@ class Timer extends Component {
 Timer.propTypes = {
   ableBtn: PropTypes.func.isRequired,
   disableBttn: PropTypes.func.isRequired,
+  ableNextBtn: PropTypes.func.isRequired,
 };
 
 export default Timer;
