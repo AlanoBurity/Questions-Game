@@ -9,6 +9,7 @@ class Questions extends Component {
       questionIndex: 0,
       isDisabled: false,
       nextBtnDisabled: true,
+      isDisable: false,
     };
   }
 
@@ -40,9 +41,13 @@ class Questions extends Component {
     });
   }
 
+  disableBttn = () => (this.setState({ isDisable: true }))
+
+  ableBtn = () => (this.setState({ isDisable: false }));
+
   render() {
     const { questions } = this.props;
-    const { questionIndex, isDisabled, nextBtnDisabled } = this.state;
+    const { questionIndex, isDisabled, nextBtnDisabled, isDisable } = this.state;
     const array = [questions[questionIndex]
       .correct_answer, ...questions[questionIndex].incorrect_answers];
     const shuffleArray = array.sort(() => Math.random() - Number('0.5'));
@@ -62,6 +67,21 @@ class Questions extends Component {
               >
                 {question.question}
               </p>
+        <div>
+          {
+            questions.map((question, index) => (
+              <div key={ index }>
+                <Timer disableBttn={ this.disableBttn } ableBtn={ this.ableBtn } />
+                <h1
+                  data-testid="question-category"
+                >
+                  {question.category}
+                </h1>
+                <p
+                  data-testid="question-text"
+                >
+                  {question.question}
+                </p>
 
             </div>
 
@@ -95,6 +115,43 @@ class Questions extends Component {
                   </button>)
             ))
           }
+          <div data-testid="answer-options">
+            {
+              shuffleArray.map((alternative, index) => (
+                (alternative === questions[questionIndex].correct_answer)
+                  ? (
+                    <button
+                      // className="border-green"
+                      data-testid="correct-answer"
+                      className="correct styleButton"
+                      type="button"
+                      key={ index }
+                      onClick={ this.clickAlternative }
+                      disabled={ isDisable }
+                    >
+                      {alternative}
+                    </button>)
+                  : (
+                    <button
+                      // className="border-red"
+                      data-testid={ `wrong-answer-${index}` }
+                      className="wrong styleButton"
+                      type="button"
+                      key={ index }
+                      onClick={ this.clickAlternative }
+                      disabled={ isDisable }
+                    >
+                      {alternative}
+                    </button>)
+              ))
+            }
+          </div>
+          <button
+            type="button"
+            onClick={ this.handleClick }
+          >
+            Next
+          </button>
         </div>
         {
           !nextBtnDisabled
