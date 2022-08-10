@@ -44,7 +44,7 @@ class Feedback extends Component {
     return (
       <div>
         <Header />
-        <h3 data-testid="feedback-total-score">{ score }</h3>
+        <h1 data-testid="feedback-total-score">{ score }</h1>
         <h3 data-testid="feedback-total-question">{ asserts }</h3>
         {
           (asserts < Number('3'))
