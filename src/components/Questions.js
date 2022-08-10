@@ -55,8 +55,8 @@ class Questions extends Component {
     buttons.forEach((button) => button.classList.remove('border-green'));
     buttons.forEach((button) => button.classList.remove('border-red'));
     const { questionIndex } = this.state;
-    const { history } = this.props;
     if (questionIndex === Number('4')) {
+      const { history } = this.props;
       history.push('/feedback');
     } else {
       this.setState((prev) => ({
