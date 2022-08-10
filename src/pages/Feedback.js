@@ -9,14 +9,22 @@ class Feedback extends Component {
     const { name, score, email } = this.props;
     const hash = md5(email).toString();
     const picture = `https://www.gravatar.com/avatar/${hash}`;
+    let ranking = [];
     const rankingObject = {
       name,
       score,
       picture,
     };
-    const ranking = JSON.parse(localStorage.getItem('ranking'));
-    ranking.push(rankingObject);
-    localStorage.setItem('ranking', JSON.stringify(ranking));
+    ranking = localStorage.getItem('ranking');
+    if (ranking !== null) {
+      ranking = JSON.parse(ranking);
+      ranking.push(rankingObject);
+      localStorage.setItem('ranking', JSON.stringify(ranking));
+    } else {
+      ranking = [];
+      ranking.push(rankingObject);
+      localStorage.setItem('ranking', JSON.stringify(ranking));
+    }
   }
 
   handleClick = () => {
