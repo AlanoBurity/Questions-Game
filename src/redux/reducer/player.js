@@ -4,6 +4,7 @@ const INITIAL_STATE = {
   name: 'Sign in',
   score: 0,
   gravatarEmail: '',
+  assertions: 0,
 };
 
 const player = (state = INITIAL_STATE, action) => {
@@ -18,6 +19,7 @@ const player = (state = INITIAL_STATE, action) => {
     return {
       ...state,
       score: state.score + action.score,
+      assertions: state.assertions + 1,
     };
   default:
     return state;
