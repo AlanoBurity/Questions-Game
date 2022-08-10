@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
+import { saveScoreState } from '../redux/actions';
 
 class Questions extends Component {
   constructor() {
@@ -49,16 +51,22 @@ class Questions extends Component {
     });
   }
 
-  handleClick = async () => {
+  handleClick = () => {
     const buttons = document.querySelectorAll('.option');
     buttons.forEach((button) => button.classList.remove('border-green'));
     buttons.forEach((button) => button.classList.remove('border-red'));
-    this.setState((prev) => ({
-      questionIndex: prev.questionIndex + 1,
-      nextBtnDisabled: true,
-      isDisable: false,
-      seconds: 30,
-    }), this.shuffleArrayFunc);
+    const { questionIndex } = this.state;
+    const { history } = this.props;
+    if (questionIndex === Number('4')) {
+      history.push('/feedback');
+    } else {
+      this.setState((prev) => ({
+        questionIndex: prev.questionIndex + 1,
+        nextBtnDisabled: true,
+        isDisable: false,
+        seconds: 30,
+      }), this.shuffleArrayFunc);
+    }
   }
 
   clickAlternative = ({ target }) => {
@@ -77,7 +85,17 @@ class Questions extends Component {
           assertions: prev.assertions + 1,
           questionLevel: questions[questionIndex].difficulty,
           assertionTimer: seconds,
-        }));
+        }), () => {
+          const { assertionTimer, questionLevel } = this.state;
+          const { saveScore } = this.props;
+          if (questionLevel === 'hard') {
+            saveScore(Number('10') + (assertionTimer * Number('3')));
+          } else if (questionLevel === 'medium') {
+            saveScore(Number('10') + (assertionTimer * Number('2')));
+          } else {
+            saveScore(Number('10') + assertionTimer);
+          }
+        });
         buttonIncorrect.forEach((button) => button.classList.add(styleRed));
       } else {
         buttonIncorrect.forEach((button) => button.classList.add(styleRed));
@@ -91,8 +109,6 @@ class Questions extends Component {
     const { questionIndex,
       nextBtnDisabled,
       isDisable,
-      // questionLevel,
-      // assertions,
       arrayQuestions,
       seconds } = this.state;
     return (
@@ -164,6 +180,14 @@ class Questions extends Component {
 
 Questions.propTypes = {
   questions: PropTypes.arrayOf(PropTypes.object).isRequired,
+  saveScore: PropTypes.func.isRequired,
+  history: PropTypes.shape({
+    push: PropTypes.func,
+  }).isRequired,
 };
 
-export default Questions;
+const mapDispatchToProps = (dispatch) => ({
+  saveScore: (score) => dispatch(saveScoreState(score)),
+});
+
+export default connect(null, mapDispatchToProps)(Questions);

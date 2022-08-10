@@ -24,7 +24,7 @@ export const fetchToken = () => async (dispatch) => {
   }
 };
 
-// export const saveScoreState = (score) => ({
-//   type: SAVE_SCORE,
-//   score,
-// });
+export const saveScoreState = (score) => ({
+  type: SAVE_SCORE,
+  score,
+});
