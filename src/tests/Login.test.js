@@ -5,7 +5,7 @@ import { renderWithRouterAndRedux } from './helpers/renderWithRouterAndRedux';
 import App from '../App';
 
 describe('Testing Login page', () => {
-    it("Should render all page's elements", () => {
+    it("Should render all page's elements", async () => {
       const { history } = renderWithRouterAndRedux(<App />);
 
       const userInput = screen.getByTestId("input-player-name");
@@ -33,8 +33,10 @@ describe('Testing Login page', () => {
       expect(playBtn).not.toBeDisabled();
 
       userEvent.click(playBtn);
+      (expect(await screen.findByText('Score:')).toBeInTheDocument());
       const { pathname } = history.location;
       expect(pathname).toBe('/questions');
+
 
     });
 
