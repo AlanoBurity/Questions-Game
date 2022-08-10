@@ -12,7 +12,6 @@ class Questions extends Component {
       isDisable: false,
       questionLevel: '',
       arrayQuestions: [],
-      assertions: 0,
       seconds: 30,
       assertionTimer: 0,
     };
