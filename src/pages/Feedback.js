@@ -2,10 +2,19 @@ import React, { Component } from 'react';
 import propTypes from 'prop-types';
 import { connect } from 'react-redux';
 import md5 from 'crypto-js/md5';
+import { Redirect } from 'react-router-dom';
 import Header from '../components/Header';
 import { clearState } from '../redux/actions';
 
 class Feedback extends Component {
+  constructor() {
+    super();
+    this.state = {
+      redirectRanking: false,
+      redirectLogin: false,
+    };
+  }
+
   componentDidMount() {
     const { name, score, email } = this.props;
     const hash = md5(email).toString();
@@ -29,20 +38,32 @@ class Feedback extends Component {
   }
 
   handleClick = () => {
-    const { history, clearStateFunc } = this.props;
+    const { clearStateFunc } = this.props;
     clearStateFunc();
-    history.push('/');
+    this.setState({
+      redirectLogin: true,
+    });
   }
 
   redirectRanking = () => {
-    const { history } = this.props;
-    history.push('/ranking');
+    this.setState({
+      redirectRanking: true,
+    });
   }
 
   render() {
     const { score, asserts } = this.props;
+    const { redirectRanking, redirectLogin } = this.state;
     return (
       <div>
+        {
+          redirectRanking
+            && <Redirect to="/ranking" />
+        }
+        {
+          redirectLogin
+            && <Redirect to="/" />
+        }
         <Header />
         <h1 data-testid="feedback-total-score">{ score }</h1>
         <h3 data-testid="feedback-total-question">{ asserts }</h3>
@@ -90,9 +111,6 @@ Feedback.propTypes = {
   name: propTypes.string.isRequired,
   email: propTypes.string.isRequired,
   clearStateFunc: propTypes.func.isRequired,
-  history: propTypes.shape({
-    push: propTypes.func,
-  }).isRequired,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Feedback);
