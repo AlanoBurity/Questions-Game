@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
+import { saveScoreState } from '../redux/actions';
 
 class Timer extends Component {
   constructor() {
@@ -41,7 +43,6 @@ class Timer extends Component {
     const { seconds } = this.state;
     return (
       <h1 className="timer">{ seconds }</h1>
-
     );
   }
 }
@@ -52,4 +53,8 @@ Timer.propTypes = {
   ableNextBtn: PropTypes.func.isRequired,
 };
 
-export default Timer;
+const mapDispatchToProps = (dispatch) => ({
+  saveScore: (score) => dispatch(saveScoreState(score)),
+});
+
+export default connect(null, mapDispatchToProps)(Timer);

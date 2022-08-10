@@ -6,7 +6,7 @@ import trivia from '../trivia.png';
 
 class Header extends Component {
   render() {
-    const { userName, email } = this.props;
+    const { userName, email, score } = this.props;
     const hash = md5(email).toString();
     return (
       <header>
@@ -23,7 +23,7 @@ class Header extends Component {
           <img className="trivia-header" src={ trivia } alt="Logo Trivia" />
           <div className="score-section">
             <h2>Score:</h2>
-            <h3 data-testid="header-score">0</h3>
+            <h3 data-testid="header-score">{ score }</h3>
           </div>
         </div>
       </header>
@@ -32,13 +32,15 @@ class Header extends Component {
 }
 
 const mapStateToProps = (state) => ({
-  userName: state.userReducer.user,
-  email: state.userReducer.email,
+  userName: state.player.name,
+  email: state.player.gravatarEmail,
+  score: state.player.score,
 });
 
 Header.propTypes = {
   userName: propTypes.string.isRequired,
   email: propTypes.string.isRequired,
+  score: propTypes.number.isRequired,
 };
 
 export default connect(mapStateToProps)(Header);

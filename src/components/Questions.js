@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import Timer from './Timer';
+import { connect } from 'react-redux';
+import { saveScoreState } from '../redux/actions';
 
 class Questions extends Component {
   constructor() {
@@ -9,17 +10,63 @@ class Questions extends Component {
       questionIndex: 0,
       nextBtnDisabled: true,
       isDisable: false,
+      questionLevel: '',
+      arrayQuestions: [],
+      assertions: 0,
+      seconds: 30,
+      assertionTimer: 0,
     };
+  }
+
+  componentDidMount() {
+    this.shuffleArrayFunc();
+    this.intervalID();
+  }
+
+  intervalID = () => {
+    setInterval(() => {
+      this.setState((prevState) => ({
+        seconds: prevState.seconds > 0 ? prevState.seconds - 1 : this.timerEnd(),
+      }));
+    }, Number('1000'));
+  }
+
+  timerEnd = () => {
+    clearInterval();
+    this.setState({
+      seconds: 0,
+      isDisable: true,
+      nextBtnDisabled: false,
+    });
+  }
+
+  shuffleArrayFunc = () => {
+    const { questionIndex } = this.state;
+    const { questions } = this.props;
+    const array = [questions[questionIndex]
+      .correct_answer, ...questions[questionIndex].incorrect_answers];
+    const shuffleArray = array.sort(() => Math.random() - Number('0.5'));
+    this.setState({
+      arrayQuestions: shuffleArray,
+    });
   }
 
   handleClick = () => {
     const buttons = document.querySelectorAll('.option');
     buttons.forEach((button) => button.classList.remove('border-green'));
     buttons.forEach((button) => button.classList.remove('border-red'));
-    this.setState((prev) => ({
-      questionIndex: prev.questionIndex + 1,
-      nextBtnDisabled: true,
-    }));
+    const { questionIndex } = this.state;
+    const { history } = this.props;
+    if (questionIndex === Number('4')) {
+      history.push('/feedback');
+    } else {
+      this.setState((prev) => ({
+        questionIndex: prev.questionIndex + 1,
+        nextBtnDisabled: true,
+        isDisable: false,
+        seconds: 30,
+      }), this.shuffleArrayFunc);
+    }
   }
 
   clickAlternative = ({ target }) => {
@@ -31,7 +78,24 @@ class Questions extends Component {
       const styleRed = 'border-red';
       const stylegreen = 'border-green';
       if (target.classList.contains('correct')) {
+        const { questions } = this.props;
+        const { questionIndex, seconds } = this.state;
         target.classList.add(stylegreen);
+        this.setState((prev) => ({
+          assertions: prev.assertions + 1,
+          questionLevel: questions[questionIndex].difficulty,
+          assertionTimer: seconds,
+        }), () => {
+          const { assertionTimer, questionLevel } = this.state;
+          const { saveScore } = this.props;
+          if (questionLevel === 'hard') {
+            saveScore(Number('10') + (assertionTimer * Number('3')));
+          } else if (questionLevel === 'medium') {
+            saveScore(Number('10') + (assertionTimer * Number('2')));
+          } else {
+            saveScore(Number('10') + assertionTimer);
+          }
+        });
         buttonIncorrect.forEach((button) => button.classList.add(styleRed));
       } else {
         buttonIncorrect.forEach((button) => button.classList.add(styleRed));
@@ -40,28 +104,19 @@ class Questions extends Component {
     });
   }
 
-  disableBttn = () => (this.setState({ isDisable: true }))
-
-  ableBtn = () => (this.setState({ isDisable: false }));
-
-  ableNextBtn = () => (this.setState({ nextBtnDisabled: false }));
-
   render() {
     const { questions } = this.props;
-    const { questionIndex, nextBtnDisabled, isDisable } = this.state;
-    const array = [questions[questionIndex]
-      .correct_answer, ...questions[questionIndex].incorrect_answers];
-    const shuffleArray = array.sort(() => Math.random() - Number('0.5'));
+    const { questionIndex,
+      nextBtnDisabled,
+      isDisable,
+      arrayQuestions,
+      seconds } = this.state;
     return (
       <div className="question-container">
         {
           questions.map((question, index) => (
             <div key={ index }>
-              <Timer
-                disableBttn={ this.disableBttn }
-                ableBtn={ this.ableBtn }
-                ableNextBtn={ this.ableNextBtn }
-              />
+              <h1 className="timer">{ seconds }</h1>
               <h1
                 data-testid="question-category"
               >
@@ -79,7 +134,7 @@ class Questions extends Component {
         }
         <div data-testid="answer-options" className="questions-alternatives">
           {
-            shuffleArray.map((alternative, index) => (
+            arrayQuestions.map((alternative, index) => (
               (alternative === questions[questionIndex].correct_answer)
                 ? (
                   <button
@@ -125,6 +180,14 @@ class Questions extends Component {
 
 Questions.propTypes = {
   questions: PropTypes.arrayOf(PropTypes.object).isRequired,
+  saveScore: PropTypes.func.isRequired,
+  history: PropTypes.shape({
+    push: PropTypes.func,
+  }).isRequired,
 };
 
-export default Questions;
+const mapDispatchToProps = (dispatch) => ({
+  saveScore: (score) => dispatch(saveScoreState(score)),
+});
+
+export default connect(null, mapDispatchToProps)(Questions);

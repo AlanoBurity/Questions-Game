@@ -37,7 +37,7 @@ class Game extends Component {
         <Header />
         {
           (questions.length !== 0)
-            ? <Questions questions={ questions } />
+            ? <Questions questions={ questions } { ...this.props } />
             : <p>Loading...</p>
         }
       </section>
