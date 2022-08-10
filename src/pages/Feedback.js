@@ -3,6 +3,7 @@ import propTypes from 'prop-types';
 import { connect } from 'react-redux';
 import md5 from 'crypto-js/md5';
 import Header from '../components/Header';
+import { clearState } from '../redux/actions';
 
 class Feedback extends Component {
   componentDidMount() {
@@ -28,7 +29,8 @@ class Feedback extends Component {
   }
 
   handleClick = () => {
-    const { history } = this.props;
+    const { history, clearStateFunc } = this.props;
+    clearStateFunc();
     history.push('/');
   }
 
@@ -78,14 +80,19 @@ const mapStateToProps = (state) => ({
   asserts: state.player.assertions,
 });
 
+const mapDispatchToProps = (dispatch) => ({
+  clearStateFunc: () => dispatch(clearState()),
+});
+
 Feedback.propTypes = {
   score: propTypes.number.isRequired,
   asserts: propTypes.number.isRequired,
   name: propTypes.string.isRequired,
   email: propTypes.string.isRequired,
+  clearStateFunc: propTypes.func.isRequired,
   history: propTypes.shape({
     push: propTypes.func,
   }).isRequired,
 };
 
-export default connect(mapStateToProps)(Feedback);
+export default connect(mapStateToProps, mapDispatchToProps)(Feedback);
