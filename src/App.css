@@ -6,7 +6,7 @@ body {
 
 .login-section {
   align-items: center;
-  background-color: rgb(139, 72, 17);
+  background-color: rgb(209, 116, 40);
   display: flex;
   flex-direction: column;
   height: 100vh;
@@ -38,11 +38,7 @@ body {
 
 .login-form {
   align-items: center;
-
-  /* background-color: rgb(148, 166, 168); */
   border-radius: 10px;
-
-  /* box-shadow: 5px 5px 5px black; */
   display: flex;
   flex-direction: column;
   height: 200px;
@@ -69,32 +65,43 @@ body {
 }
 
 .questions-alternatives button {
-  background-color: #a56925;
+  background-color: #ff8901;
   border-radius: 25px;
   font-size: 16px;
   font-weight: 700;
   line-height: 20px;
-  margin-bottom: 5px;
+  margin-bottom: 10px;
   padding: 15px;
 }
 
 .btn-section button {
-  border-radius: 10px;
+  border: none;
+  border-radius: 15px;
+  cursor: pointer;
   font-size: 15px;
   font-weight: 700;
   height: 30px;
-  margin-left: 10px;
+  margin-right: 20px;
   padding: 5px;
   width: 100px;
 }
 
+.ranking-section button {
+  border: none;
+  border-radius: 15px;
+  cursor: pointer;
+  margin-right: 20px;
+  padding: 10px;
+  width: 100px;
+}
+
 .btn-section button:hover {
-  background-color: rgb(180, 180, 180);
-  border-width: 3px;
+  background-color: orange;
+  transform: scale(1.1);
 }
 
 header {
-  background-color: rgb(139, 72, 17);
+  background-color: rgb(209, 116, 40);
   padding: 20px 0;
 }
 
@@ -128,17 +135,17 @@ header {
 }
 
 .game-section {
-  background-color: rgb(233, 221, 206);
+  background-color: rgb(238, 232, 225);
   height: 100vh;
   width: 100vw;
 }
 
 .question-container {
-  background-color: rgba(160, 129, 89, 0.61);
+  background-color: rgba(231, 156, 35, 0.637);
   border-radius: 15px;
   box-shadow: 5px 5px 5px black;
-  height: 500px;
-  margin: 30px auto;
+  height: auto;
+  margin: 100px auto;
   padding: 20px;
   width: 700px;
 }
@@ -159,7 +166,8 @@ header {
 }
 
 .questions-alternatives button:hover {
-  border-width: 4px;
+  background-color: rgb(255, 115, 0);
+  transform: scale(1.03);
 }
 
 .border-green {
@@ -171,13 +179,123 @@ header {
 }
 
 .next-questionBtn {
-  border-radius: 10px;
+  border-radius: 15px;
   height: 30px;
   margin: 10px;
   width: 150px;
 }
 
-.next-questionBtn button:hover {
-  background-color: rgb(156, 21, 21);
-  border-width: 3px;
+.next-questionBtn:hover {
+  background-color: rgb(255, 94, 0);
+  transform: scale(1.1);
+}
+
+.feedback-sections {
+  background-color: rgb(131, 90, 40);
+  height: 100vh;
+  width: 100vw;
+}
+
+.feedback-container {
+  align-items: center;
+  background-color: rgba(212, 103, 31, 0.733);
+  border-radius: 15px;
+  box-shadow: 5px 5px 5px black;
+  display: flex;
+  flex-direction: column;
+  height: 300px;
+  justify-content: space-around;
+  margin: 90px auto;
+  padding: 30px;
+  width: 300px;
+}
+
+.feedback-container p {
+  font-weight: 700;
+}
+
+.feedback-buttons {
+  display: flex;
+  margin: 10px auto;
+}
+
+.feedback-btn {
+  border: none;
+  border-radius: 15px;
+  cursor: pointer;
+  margin-right: 20px;
+  padding: 10px;
+}
+
+.feedback-btn:hover {
+  background-color: orange;
+  transform: scale(1.1);
+}
+
+.ranking-section {
+  align-items: center;
+  background-color: rgba(224, 101, 19, 0.863);
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  justify-content: center;
+  width: 100vw;
+}
+
+.ranking-container {
+  align-items: center;
+  background-color: rgb(235, 231, 228);
+  border: 5px solid black;
+  border-radius: 15px;
+  display: flex;
+  flex-direction: column;
+  height: auto;
+  justify-content: space-around;
+  margin: 60px auto;
+  padding: 20px;
+  width: 250px;
+}
+
+.ranking-titles {
+  display: flex;
+}
+
+.player-pic {
+  border-radius: 15px;
+  margin-bottom: 10px;
+  width: 50px;
+}
+
+.ranking-titles p {
+  font-size: 20px;
+  font-weight: 700;
+  margin: 10px 20px;
+  text-decoration: underline;
+}
+
+.ranking-player {
+  display: flex;
+}
+
+.ranking-player p {
+  font-size: 20px;
+  font-weight: 700;
+  margin: 15px 20px;
+}
+
+.ranking-login-btn:hover {
+  background-color: orange;
+  transform: scale(1.1);
+}
+
+.settings-section {
+  align-items: center;
+  background-color: rgb(209, 116, 40);
+  display: flex;
+  flex-direction: column;
+  font-size: 20px;
+  font-weight: 700;
+  height: 100vh;
+  justify-content: center;
+  width: 100vw;
 }

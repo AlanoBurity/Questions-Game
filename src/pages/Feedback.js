@@ -5,6 +5,8 @@ import md5 from 'crypto-js/md5';
 import { Redirect } from 'react-router-dom';
 import Header from '../components/Header';
 import { clearState } from '../redux/actions';
+import sad from '../sad-face.png';
+import happy from '../happy-face.png';
 
 class Feedback extends Component {
   constructor() {
@@ -55,7 +57,7 @@ class Feedback extends Component {
     const { score, asserts } = this.props;
     const { redirectRanking, redirectLogin } = this.state;
     return (
-      <div>
+      <div className="feedback-section">
         {
           redirectRanking
             && <Redirect to="/ranking" />
@@ -65,30 +67,68 @@ class Feedback extends Component {
             && <Redirect to="/" />
         }
         <Header />
-        <h1 data-testid="feedback-total-score">{ score }</h1>
-        <h3 data-testid="feedback-total-question">{ asserts }</h3>
-        {
-          (asserts < Number('3'))
-            ? (
-              <p data-testid="feedback-text">
-                Could be better...
-              </p>)
-            : <p data-testid="feedback-text">Well Done!</p>
-        }
-        <button
-          type="button"
-          data-testid="btn-play-again"
-          onClick={ this.handleClick }
-        >
-          Play Again
-        </button>
-        <button
-          type="button"
-          data-testid="btn-ranking"
-          onClick={ this.redirectRanking }
-        >
-          Ranking
-        </button>
+        <main className="feedback-container">
+          <h1 data-testid="feedback-total-score">
+            {/* {score} */}
+            { `Your score is ${score}` }
+          </h1>
+          <h3 data-testid="feedback-total-question">
+            {/* {asserts} */}
+            { `You got ${asserts} questions right!` }
+          </h3>
+          {
+            (asserts < Number('3'))
+              ? (
+                <div className="feedback-meessage">
+                  <p data-testid="feedback-text">
+                    Could be better...
+                  </p>
+                  <img src={ sad } alt="sad emoji " width="100px" />
+                </div>
+              )
+              : (
+                <div className="feedback-meessage">
+                  <p data-testid="feedback-text">Well Done!</p>
+                  <img src={ happy } alt="happy emoji " width="100px" />
+                </div>)
+          }
+
+          <div className="feedback-buttons">
+            <button
+              type="button"
+              data-testid="btn-play-again"
+              onClick={ this.handleClick }
+              className="feedback-btn"
+            >
+              Play Again
+            </button>
+            <button
+              type="button"
+              data-testid="btn-ranking"
+              onClick={ this.redirectRanking }
+              className="feedback-btn"
+            >
+              Ranking
+            </button>
+          </div>
+          {/* <button
+            type="button"
+            data-testid="btn-play-again"
+            onClick={ this.handleClick }
+            className="feedback-btn"
+          >
+            Play Again
+          </button>
+          <button
+            type="button"
+            data-testid="btn-ranking"
+            onClick={ this.redirectRanking }
+            className="feedback-btn"
+          >
+            Ranking
+          </button> */}
+
+        </main>
       </div>
     );
   }
