@@ -15,7 +15,6 @@ class Ranking extends Component {
 
   componentDidMount() {
     const rankingFinal = JSON.parse(localStorage.getItem('ranking'));
-    // console.log(rankingFinal);
     this.setState({
       ranking: rankingFinal.sort((a, b) => b.score - a.score),
     });
@@ -44,6 +43,11 @@ class Ranking extends Component {
             {
               ranking.map((player, index) => (
                 <div key={ index } className="ranking-player">
+                  <img
+                    src={ player.picture }
+                    alt={ player.name }
+                    className="player-pic"
+                  />
                   <p data-testid={ `player-name-${index}` }>{player.name}</p>
                   <p data-testid={ `player-score-${index}` }>{player.score}</p>
                 </div>
@@ -51,6 +55,7 @@ class Ranking extends Component {
             }
 
           </main>
+
           <button
             type="button"
             data-testid="btn-go-home"

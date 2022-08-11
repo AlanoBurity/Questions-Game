@@ -260,10 +260,16 @@ header {
   display: flex;
 }
 
+.player-pic {
+  border-radius: 15px;
+  margin-bottom: 10px;
+  width: 50px;
+}
+
 .ranking-titles p {
   font-size: 20px;
   font-weight: 700;
-  margin: 10px 25px;
+  margin: 10px 20px;
   text-decoration: underline;
 }
 
