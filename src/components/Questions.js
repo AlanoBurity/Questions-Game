@@ -115,13 +115,19 @@ class Questions extends Component {
         {
           questions.map((question, index) => (
             <div key={ index }>
-              <h1 className="timer">{ seconds }</h1>
               <h1
+                className={ seconds > Number('10') ? 'timer great' : 'timer over' }
+              >
+                { seconds }
+              </h1>
+              <h1
+                className="question-informations"
                 data-testid="question-category"
               >
                 {question.category}
               </h1>
               <p
+                className="question-informations"
                 data-testid="question-text"
               >
                 {question.question}
