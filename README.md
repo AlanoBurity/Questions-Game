@@ -1,4 +1,7 @@
 # 🚧 README em construção 🚧
+Teste:  Veja a aplicação funcionando.
+
+https://main.d7s8kbo28cyg0.amplifyapp.com/
 
 <!-- Olá, Tryber!
 
